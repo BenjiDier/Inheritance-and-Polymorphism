@@ -1,11 +1,12 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 class Employee {
 protected:
 	string name;
 	double salary;
 public:
-	Employee() {
+	Employee() { // Class for employee role.
 		name = "";
 		salary = 0;
 	};
@@ -13,26 +14,30 @@ public:
 		name = n;
 		salary = s;
 	};
-	void showInfo() {
-		cout << name << ' ' << salary << endl;
+	void showInfo() { // Function to show info of specific role. Shows name and salary.
+		cout <<"Info for " << name << ", Salary: " << salary << endl;
 	}
 	virtual void calculateBonus() { // Parameter will be bonus percentage.
-		cout << "Bonus for Employee : \n";
+		cout << "Bonus for Employee : \n"; 
 	}
 };
 
-class Manager : public Employee {
+class Manager : public Employee { // Class for manager role.
 public:
-	Manager(string n, double s) {
+	Manager() { // Both manager and the other classes needs default constructor otherwise the compiler cries.
+		name = "";
+		salary = 0;
+	}
+	Manager(string n, double s) { // Constructor for manager role.
 		name = n;
 		salary = s;
 	}
-	void calculateBonus() override {
+	void calculateBonus() override { // Overriddes original calculate bonus for the different bonus percentage.
 		cout <<"Bonus for Manger : " << (salary *= 0.20) << '$' << endl; // Calculates and displays bonus for Manager role.
 	}
 };
 
-class Developer : public Employee {
+class Developer : public Employee { // Class for developer role.
 public:
 	Developer(string n, double s) {
 		name = n;
@@ -43,12 +48,17 @@ public:
 	}
 };
 
-class Intern : public Manager {
+class Intern : public Manager { // Class for intern role. Inherits manager class properties.
+public:
+	Intern() { 
+		name = "";
+		salary = 0;
+	}
 	Intern(string n, double s = 1000) {
 		name = n;
 		salary = s;
 	}
-	void calculateBonus() override {
+	void calculateBonus() override { // Overridden function for no bonus necessary.
 		cout << "Hah, intern has no bonus.";
 	}
 
@@ -68,6 +78,11 @@ int main() {
 	nptr->calculateBonus(); // Calculates bonus for new blank bonus object.
 
 	// Bonus
-	Employee* array
-
+	cout << "\n___________________________________\nStep 3:\n ";
+	vector<Employee*> employees = {new Manager("Manager person",3), new Developer ("Developer dude",4), new Intern("No one in particular")};
+	for (int i = 0; i < employees.size(); i++) {
+		employees[i]->showInfo(); // Shows info of each employee role.
+		employees[i]->calculateBonus(); // Shows bonus of each employee role.
+		cout << '\n';
+	}
 }
